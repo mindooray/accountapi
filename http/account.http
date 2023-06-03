@@ -1,0 +1,43 @@
+GET /accounts
+Host: localhost:8080
+Content-Type: application/json
+
+###
+GET /accounts/1
+Host: localhost:8080
+Content-Type: application/json
+
+###
+POST /accounts
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "email": "hwajeong@naver.com",
+  "loginId": "hwa",
+  "password": "1234"
+}
+
+###
+PATCH /accounts/1/inactive
+Host: localhost:8080
+Content-Type: application/json
+
+###
+PATCH /accounts/1/active
+Host: localhost:8080
+Content-Type: application/json
+
+###
+DELETE /accounts/1
+Host: localhost:8080
+Content-Type: application/json
+
+###
+PATCH /accounts/1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "email":"hellolo@gmail.com"
+}
