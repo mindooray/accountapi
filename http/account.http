@@ -8,6 +8,11 @@ Host: localhost:8080
 Content-Type: application/json
 
 ###
+GET /accounts/login/1
+Host: localhost:8080
+Content-Type: application/json
+
+###
 POST /accounts
 Host: localhost:8080
 Content-Type: application/json

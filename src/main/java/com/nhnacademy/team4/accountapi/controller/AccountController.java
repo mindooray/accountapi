@@ -6,6 +6,7 @@ import com.nhnacademy.team4.accountapi.domain.Account;
 import com.nhnacademy.team4.accountapi.domain.AccountStatus;
 import com.nhnacademy.team4.accountapi.dto.AccountDTO;
 import com.nhnacademy.team4.accountapi.dto.AccountRegisterDTO;
+import com.nhnacademy.team4.accountapi.dto.LoginDTO;
 import com.nhnacademy.team4.accountapi.service.AccountServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +40,12 @@ public class AccountController {
     public ResponseEntity<AccountDTO> getAccount(@PathVariable("id")Long accountId){
         AccountDTO account = accountService.findByAccountId(accountId);
         return ResponseEntity.ok(account);
+    }
+
+    @GetMapping("/login/{id}")
+    public ResponseEntity<LoginDTO> getLogin(@PathVariable("id")Long accountId){
+        LoginDTO login = accountService.findByLoginId(accountId);
+        return ResponseEntity.ok(login);
     }
 
     //회원가입

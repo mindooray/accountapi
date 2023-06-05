@@ -4,6 +4,7 @@ import com.nhnacademy.team4.accountapi.domain.Account;
 import com.nhnacademy.team4.accountapi.domain.AccountStatus;
 import com.nhnacademy.team4.accountapi.domain.Role;
 import com.nhnacademy.team4.accountapi.dto.AccountRegisterDTO;
+import com.nhnacademy.team4.accountapi.dto.LoginDTO;
 import com.nhnacademy.team4.accountapi.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -78,4 +79,10 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.findAll();
     }
 
+    @Override
+    public LoginDTO findByLoginId(Long accountId) {
+        Account account = accountRepository.findById(accountId).get();
+        LoginDTO loginDTO = new LoginDTO(account.getLoginId(), account.getPassword());
+        return loginDTO;
+    }
 }
