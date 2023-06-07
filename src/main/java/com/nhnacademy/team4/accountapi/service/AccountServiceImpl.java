@@ -27,7 +27,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountDTO findByAccountId(Long accountId) {
         Account account = accountRepository.findById(accountId).get();
-        AccountDTO accountDTO = new AccountDTO(account.getEmail(), account.getLoginId(), account.getPassword(), account.getStatus(), account.getRole());
+        AccountDTO accountDTO = new AccountDTO(account.getEmail(), account.getLoginId(), account.getPassword(), account.getStatus().name(), account.getRole());
         return accountDTO;
     }
 
@@ -44,7 +44,7 @@ public class AccountServiceImpl implements AccountService {
             data.setPassword(account.getPassword());
         }
         accountRepository.save(data);
-        AccountDTO accountDTO = new AccountDTO(data.getEmail(), data.getLoginId(), data.getPassword(), data.getStatus(), data.getRole());
+        AccountDTO accountDTO = new AccountDTO(data.getEmail(), data.getLoginId(), data.getPassword(), data.getStatus().name(), data.getRole());
 
         return accountDTO;
 
@@ -54,7 +54,7 @@ public class AccountServiceImpl implements AccountService {
     public AccountDTO modifyStatus(Long accountId, AccountStatus status){
         Account data = accountRepository.findById(accountId).get();
         data.setStatus(status);
-        AccountDTO accountDTO = new AccountDTO(data.getEmail(), data.getLoginId(), data.getPassword(), data.getStatus(), data.getRole());
+        AccountDTO accountDTO = new AccountDTO(data.getEmail(), data.getLoginId(), data.getPassword(), data.getStatus().name(), data.getRole());
         return accountDTO;
     }
 
@@ -83,7 +83,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public LoginDTO findByLoginId(String loginId) {
         Account account = accountRepository.findByLoginId(loginId);
-        LoginDTO loginDTO = new LoginDTO(account.getLoginId(), account.getPassword(), account.getStatus(), account.getRole());
+        LoginDTO loginDTO = new LoginDTO(account.getLoginId(), account.getPassword(), account.getStatus().name(), account.getRole());
         return loginDTO;
     }
 

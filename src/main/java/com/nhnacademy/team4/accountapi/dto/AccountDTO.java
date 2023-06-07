@@ -18,7 +18,7 @@ public class AccountDTO {
     private String email;
     private String loginId;
     private String password;
-    private AccountStatus status;
+    private String status;
     private String role;
 
 }
