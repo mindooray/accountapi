@@ -18,8 +18,8 @@ Host: localhost:8080
 Content-Type: application/json
 
 {
-  "email": "hwajeong@naver.com",
-  "loginId": "hwa",
+  "email": "yooonmin@naver.com",
+  "loginId": "yoon",
   "password": "1234"
 }
 
@@ -46,3 +46,13 @@ Content-Type: application/json
 {
   "email":"hellolo@gmail.com"
 }
+
+###
+GET /accounts/login/hwa
+Host: localhost:8080
+Content-Type: application/json
+
+###
+GET /accounts/auth/login/hwa
+Host:localhost:8080
+Content-Type: application/json

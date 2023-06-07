@@ -5,6 +5,7 @@ import com.nhnacademy.team4.accountapi.domain.Account;
 import com.nhnacademy.team4.accountapi.domain.Account;
 import com.nhnacademy.team4.accountapi.domain.AccountStatus;
 import com.nhnacademy.team4.accountapi.dto.AccountDTO;
+import com.nhnacademy.team4.accountapi.dto.AccountIdDTO;
 import com.nhnacademy.team4.accountapi.dto.AccountRegisterDTO;
 import com.nhnacademy.team4.accountapi.dto.LoginDTO;
 import com.nhnacademy.team4.accountapi.service.AccountServiceImpl;
@@ -12,6 +13,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +32,7 @@ public class AccountController {
     AccountStatus active = AccountStatus.ACTIVE;
     AccountStatus inActive = AccountStatus.INACTIVE;
     AccountStatus withdraw = AccountStatus.WITHDRAW;
-    @Autowired
-    private AccountServiceImpl accountService;
+    private final AccountServiceImpl accountService;
 
     @GetMapping
     public List<Account> getAccounts(){
@@ -43,18 +46,17 @@ public class AccountController {
     }
 
     @GetMapping("/login/{id}")
-    public ResponseEntity<LoginDTO> getLogin(@PathVariable("id")Long accountId){
-        LoginDTO login = accountService.findByLoginId(accountId);
+    public ResponseEntity<AccountIdDTO> getLogin(@PathVariable("id")String loginId){
+        AccountIdDTO login = accountService.findAccountByLoginId(loginId);
         return ResponseEntity.ok(login);
     }
 
-    //회원가입
     @PostMapping
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<AccountRegisterDTO> createAccount(@Validated @RequestBody AccountRegisterDTO accountRegisterDTO){
         AccountRegisterDTO account = accountService.register(accountRegisterDTO);
         return ResponseEntity.ok(account);
     }
-
 
     @PatchMapping("/{id}")
     public ResponseEntity<AccountDTO> modifyAccount(@PathVariable("id")Long accountId, @RequestBody AccountRegisterDTO accountRegisterDTO){
@@ -83,7 +85,11 @@ public class AccountController {
         return ResponseEntity.ok(modifyAccountStatus);
     }
 
-
+    @GetMapping("/auth/login/{id}")
+    public ResponseEntity<LoginDTO> getAccountId(@PathVariable("id")String loginId){
+         LoginDTO accountIdDTO = accountService.findByLoginId(loginId);
+        return ResponseEntity.ok(accountIdDTO);
+    }
 
 
 }

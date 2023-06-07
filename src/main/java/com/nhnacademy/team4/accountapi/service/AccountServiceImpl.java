@@ -3,6 +3,7 @@ package com.nhnacademy.team4.accountapi.service;
 import com.nhnacademy.team4.accountapi.domain.Account;
 import com.nhnacademy.team4.accountapi.domain.AccountStatus;
 import com.nhnacademy.team4.accountapi.domain.Role;
+import com.nhnacademy.team4.accountapi.dto.AccountIdDTO;
 import com.nhnacademy.team4.accountapi.dto.AccountRegisterDTO;
 import com.nhnacademy.team4.accountapi.dto.LoginDTO;
 import com.nhnacademy.team4.accountapi.repository.AccountRepository;
@@ -80,9 +81,17 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public LoginDTO findByLoginId(Long accountId) {
-        Account account = accountRepository.findById(accountId).get();
+    public LoginDTO findByLoginId(String loginId) {
+        Account account = accountRepository.findByLoginId(loginId);
         LoginDTO loginDTO = new LoginDTO(account.getLoginId(), account.getPassword());
         return loginDTO;
     }
+
+    @Override
+    public AccountIdDTO findAccountByLoginId(String loginId) {
+        Account account = accountRepository.findByLoginId(loginId);
+        AccountIdDTO accountIdDTO = new AccountIdDTO(account.getAccountId());
+        return accountIdDTO;
+    }
+
 }

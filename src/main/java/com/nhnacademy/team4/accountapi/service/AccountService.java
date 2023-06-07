@@ -3,6 +3,7 @@ package com.nhnacademy.team4.accountapi.service;
 import com.nhnacademy.team4.accountapi.domain.Account;
 import com.nhnacademy.team4.accountapi.domain.AccountStatus;
 import com.nhnacademy.team4.accountapi.dto.AccountDTO;
+import com.nhnacademy.team4.accountapi.dto.AccountIdDTO;
 import com.nhnacademy.team4.accountapi.dto.AccountRegisterDTO;
 import com.nhnacademy.team4.accountapi.dto.LoginDTO;
 import org.springframework.data.domain.Page;
@@ -20,5 +21,7 @@ public interface AccountService {
 
     AccountRegisterDTO register(AccountRegisterDTO accountRegisterDTO);
     List<Account> findAllAccounts();
-    LoginDTO findByLoginId(Long accountId);
+    LoginDTO findByLoginId(String loginId);
+
+    AccountIdDTO findAccountByLoginId(String loginId);
 }
