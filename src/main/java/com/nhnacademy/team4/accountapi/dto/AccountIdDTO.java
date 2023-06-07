@@ -11,12 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountIdDTO {
-
     private Long accountId;
-    private String loginId;
-    private String password;
-    private String Role;
-    private String Status;
-
 }
 

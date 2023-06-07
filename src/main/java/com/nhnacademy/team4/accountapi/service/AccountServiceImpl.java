@@ -83,7 +83,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public LoginDTO findByLoginId(String loginId) {
         Account account = accountRepository.findByLoginId(loginId);
-        LoginDTO loginDTO = new LoginDTO(account.getLoginId(), account.getPassword());
+        LoginDTO loginDTO = new LoginDTO(account.getLoginId(), account.getPassword(), account.getStatus(), account.getRole());
         return loginDTO;
     }
 
