@@ -13,7 +13,7 @@ import javax.persistence.EnumType;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountDTO {
+public class AccountDTO implements DTO{
 
     private String email;
     private String loginId;

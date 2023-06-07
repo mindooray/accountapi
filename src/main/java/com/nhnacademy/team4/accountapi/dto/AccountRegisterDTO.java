@@ -14,7 +14,7 @@ import java.util.Date;
 @Setter
 @Valid
 @ToString
-public class AccountRegisterDTO {
+public class AccountRegisterDTO implements DTO {
 
     @NotBlank
     private String email;

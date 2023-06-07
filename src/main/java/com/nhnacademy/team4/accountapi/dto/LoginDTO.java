@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginDTO {
+public class LoginDTO implements DTO {
     private String loginId;
     private String password;
     private String status;

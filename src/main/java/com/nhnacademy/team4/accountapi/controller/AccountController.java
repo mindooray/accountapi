@@ -4,10 +4,7 @@ package com.nhnacademy.team4.accountapi.controller;
 import com.nhnacademy.team4.accountapi.domain.Account;
 import com.nhnacademy.team4.accountapi.domain.Account;
 import com.nhnacademy.team4.accountapi.domain.AccountStatus;
-import com.nhnacademy.team4.accountapi.dto.AccountDTO;
-import com.nhnacademy.team4.accountapi.dto.AccountIdDTO;
-import com.nhnacademy.team4.accountapi.dto.AccountRegisterDTO;
-import com.nhnacademy.team4.accountapi.dto.LoginDTO;
+import com.nhnacademy.team4.accountapi.dto.*;
 import com.nhnacademy.team4.accountapi.service.AccountServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -86,10 +83,17 @@ public class AccountController {
     }
 
     @GetMapping("/auth/login/{id}")
-    public ResponseEntity<LoginDTO> getAccountId(@PathVariable("id")String loginId){
-         LoginDTO accountIdDTO = accountService.findByLoginId(loginId);
-        return ResponseEntity.ok(accountIdDTO);
+    public ResponseEntity<DTO> getAccountId(@PathVariable("id")String info){
+        if(info.contains("@")){
+            EmailLoginDTO emailLoginDTO = accountService.findAccountByEmail(info);
+            return ResponseEntity.ok(emailLoginDTO);
+        }
+        else{
+            LoginDTO accountIdDTO = accountService.findByLoginId(info);
+            return ResponseEntity.ok(accountIdDTO);
+        }
     }
+
 
 
 }
