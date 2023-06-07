@@ -58,6 +58,6 @@ Host:localhost:8080
 Content-Type: application/json
 
 ###
-GET /accounts/auth/login/1234@google.com
-Host:localhost:8080
+GET /accounts/auth/login/latw@naver.com
+Host:localhost:9090
 Content-Type: application/json
