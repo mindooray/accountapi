@@ -2,10 +2,7 @@ package com.nhnacademy.team4.accountapi.service;
 
 import com.nhnacademy.team4.accountapi.domain.Account;
 import com.nhnacademy.team4.accountapi.domain.AccountStatus;
-import com.nhnacademy.team4.accountapi.dto.AccountDTO;
-import com.nhnacademy.team4.accountapi.dto.AccountIdDTO;
-import com.nhnacademy.team4.accountapi.dto.AccountRegisterDTO;
-import com.nhnacademy.team4.accountapi.dto.LoginDTO;
+import com.nhnacademy.team4.accountapi.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -24,4 +21,8 @@ public interface AccountService {
     LoginDTO findByLoginId(String loginId);
 
     AccountIdDTO findAccountByLoginId(String loginId);
+
+    EmailLoginDTO findAccountByEmail(String email);
+
+    List<Account> findProjectAccounts(List<Long> accountIds);
 }

@@ -32,8 +32,9 @@ public class AccountController {
     private final AccountServiceImpl accountService;
 
     @GetMapping
-    public List<Account> getAccounts(){
-        return accountService.findAllAccounts();
+    public ResponseEntity<List<Account>> getAccounts(){
+        List<Account> accounts = accountService.findAllAccounts();
+        return ResponseEntity.ok(accounts);
     }
 
     @GetMapping("/{id}")
@@ -75,7 +76,6 @@ public class AccountController {
         return ResponseEntity.ok(modifyAccountStatus);
     }
 
-    //
     @DeleteMapping("/{id}")
     public ResponseEntity<AccountDTO> withdrawAccount(@PathVariable("id")Long accountId) {
         AccountDTO modifyAccountStatus = accountService.modifyStatus(accountId, withdraw);
@@ -92,6 +92,12 @@ public class AccountController {
             LoginDTO accountIdDTO = accountService.findByLoginId(info);
             return ResponseEntity.ok(accountIdDTO);
         }
+    }
+
+    @GetMapping("/projects")
+    public ResponseEntity<List<Account>> getProjectAccounts(@RequestParam("accountId") List<Long> accountIds){
+        List<Account> projectAccounts = accountService.findProjectAccounts(accountIds);
+        return ResponseEntity.ok(projectAccounts);
     }
 
 

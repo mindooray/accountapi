@@ -3,6 +3,7 @@ package com.nhnacademy.team4.accountapi.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.team4.accountapi.domain.Account;
+import com.nhnacademy.team4.accountapi.dto.AccountDTO;
 import com.nhnacademy.team4.accountapi.dto.AccountRegisterDTO;
 import com.nhnacademy.team4.accountapi.repository.AccountRepository;
 import com.nhnacademy.team4.accountapi.service.AccountService;
@@ -26,11 +27,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
+import javax.print.attribute.standard.Media;
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -41,21 +42,30 @@ class AccountControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    AccountRepository accountRepository;
 
     @Test
     void getAccounts() throws Exception {
-//        given(accountService.findAllAccounts()).willReturn(List.of(new Account(5L, "")))
+        mockMvc.perform(get("/accounts"))
+                .andExpect(status().isOk())
+                        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$[0].loginId",equalTo("hwa")));
 
     }
 
     @Test
-    void getAccount() {
+    void getAccount() throws Exception {
+        mockMvc.perform(get("/accounts/{id}", 1L))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("loginId", equalTo("hwa")));
     }
 
     @Test
-    void getLogin() {
+    void getLogin() throws Exception{
+        mockMvc.perform(get("/accounts/login/{id}","hwa"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("accountId", equalTo(1)));
     }
 
     @Test
@@ -80,10 +90,12 @@ class AccountControllerTest {
 
     @Test
     void modifyAccount() {
+//        mockMvc.perform()
     }
 
     @Test
     void modifyActiveStatus() {
+
     }
 
     @Test

@@ -93,10 +93,17 @@ public class AccountServiceImpl implements AccountService {
         return accountIdDTO;
     }
 
+    @Override
     public EmailLoginDTO findAccountByEmail(String email){
         Account account = accountRepository.findAccountByEmail(email).orElseThrow(()-> new EmailNotExistException());
         EmailLoginDTO emailLoginDTO = new EmailLoginDTO(account.getLoginId(), account.getStatus().name(), account.getRole());
         return emailLoginDTO;
     }
+
+    @Override
+    public List<Account> findProjectAccounts(List<Long> accountIds){
+        return accountRepository.findByAccountIdIn(accountIds);
+    }
+
 
 }

@@ -61,3 +61,9 @@ Content-Type: application/json
 GET /accounts/auth/login/latw@naver.com
 Host:localhost:9090
 Content-Type: application/json
+
+
+###
+GET /accounts/projects?accountId=1,2
+Host:localhost:9090
+Content-Type: application/json
