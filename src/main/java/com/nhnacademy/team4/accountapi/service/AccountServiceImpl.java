@@ -26,6 +26,8 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountDTO findByAccountId(Long accountId) {
         Account account = accountRepository.findById(accountId).get();
+//        Account account = accountRepository.findById(accountId)
+//                .orElseThrow((RuntimeException::new));
         AccountDTO accountDTO = new AccountDTO(account.getEmail(), account.getLoginId(), account.getPassword(), account.getStatus().name(), account.getRole());
         return accountDTO;
     }
@@ -73,7 +75,6 @@ public class AccountServiceImpl implements AccountService {
         accountRepository.save(account);
         return accountRegisterDTO;
     }
-
     @Override
     public List<Account> findAllAccounts() {
         return accountRepository.findAll();

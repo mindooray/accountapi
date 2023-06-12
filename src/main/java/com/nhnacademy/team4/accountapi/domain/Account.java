@@ -14,11 +14,13 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode
 @Table(name="account")
 public class Account {
 
+
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="account_id")
     private Long accountId;
 

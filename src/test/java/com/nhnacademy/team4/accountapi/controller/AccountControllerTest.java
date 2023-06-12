@@ -3,6 +3,7 @@ package com.nhnacademy.team4.accountapi.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.team4.accountapi.domain.Account;
+import com.nhnacademy.team4.accountapi.domain.AccountStatus;
 import com.nhnacademy.team4.accountapi.dto.AccountDTO;
 import com.nhnacademy.team4.accountapi.dto.AccountRegisterDTO;
 import com.nhnacademy.team4.accountapi.repository.AccountRepository;
@@ -19,6 +20,7 @@ import static org.mockito.BDDMockito.given;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,13 +39,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AccountControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
+    ObjectMapper objectMapper = new ObjectMapper();
+
 
     @Test
+    @Order(2)
     void getAccounts() throws Exception {
         mockMvc.perform(get("/accounts"))
                 .andExpect(status().isOk())
@@ -53,6 +59,7 @@ class AccountControllerTest {
     }
 
     @Test
+    @Order(3)
     void getAccount() throws Exception {
         mockMvc.perform(get("/accounts/{id}", 1L))
                 .andExpect(status().isOk())
@@ -61,6 +68,7 @@ class AccountControllerTest {
     }
 
     @Test
+    @Order(4)
     void getLogin() throws Exception{
         mockMvc.perform(get("/accounts/login/{id}","hwa"))
                 .andExpect(status().isOk())
@@ -69,18 +77,14 @@ class AccountControllerTest {
     }
 
     @Test
+    @Order(1)
     void createAccount() throws Exception{
         AccountRegisterDTO actual = new AccountRegisterDTO();
         actual.setLoginId("kim");
         actual.setPassword("password");
         actual.setEmail("nhnacademy@naver.com");
 
-        ObjectMapper objectMapper = new ObjectMapper();
-
-//        given(accountService.register(actual)).willReturn(actual);
-
         mockMvc.perform(post("/accounts")
-//                        .accept(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(actual))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -89,20 +93,48 @@ class AccountControllerTest {
     }
 
     @Test
-    void modifyAccount() {
-//        mockMvc.perform()
+    void modifyAccount() throws Exception {
+        AccountDTO actual = new AccountDTO();
+        actual.setEmail("happyday@gmail.com");
+
+        mockMvc.perform(patch("/accounts/{id}", 1L)
+                        .content(objectMapper.writeValueAsString(actual))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("loginId", equalTo("hwa")));
     }
 
     @Test
-    void modifyActiveStatus() {
+    void modifyActiveStatus() throws Exception {
+        AccountDTO actual = new AccountDTO();
+
+        mockMvc.perform(patch("/accounts/{id}/active", 3L)
+                .content(objectMapper.writeValueAsString(actual))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("status", equalTo("ACTIVE")));
 
     }
 
     @Test
-    void modifyInactiveStatus() {
+    void modifyInactiveStatus() throws Exception{
+        AccountDTO actual = new AccountDTO();
+        mockMvc.perform(patch("/accounts/{id}/inactive",3L)
+                .content(objectMapper.writeValueAsString(actual))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("status", equalTo("INACTIVE")));
+
     }
 
     @Test
-    void withdrawAccount() {
+    void withdrawAccount() throws Exception{
+        mockMvc.perform(delete("/accounts/{id}", 3L))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("status",equalTo("WITHDRAW")));
     }
 }
