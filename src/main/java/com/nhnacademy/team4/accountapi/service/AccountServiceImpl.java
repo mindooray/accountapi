@@ -4,15 +4,19 @@ import com.nhnacademy.team4.accountapi.domain.Account;
 import com.nhnacademy.team4.accountapi.domain.AccountStatus;
 import com.nhnacademy.team4.accountapi.domain.Role;
 import com.nhnacademy.team4.accountapi.dto.*;
+import com.nhnacademy.team4.accountapi.exception.AccountNotFoundException;
 import com.nhnacademy.team4.accountapi.exception.EmailNotExistException;
+import com.nhnacademy.team4.accountapi.exception.ExistLoginException;
 import com.nhnacademy.team4.accountapi.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.Email;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -22,12 +26,11 @@ public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
 
-
     @Override
     public AccountDTO findByAccountId(Long accountId) {
-        Account account = accountRepository.findById(accountId).get();
-//        Account account = accountRepository.findById(accountId)
-//                .orElseThrow((RuntimeException::new));
+//        Account account = accountRepository.findById(accountId).get();
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow((AccountNotFoundException::new));
         AccountDTO accountDTO = new AccountDTO(account.getEmail(), account.getLoginId(), account.getPassword(), account.getStatus().name(), account.getRole());
         return accountDTO;
     }
@@ -61,6 +64,12 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountRegisterDTO register(AccountRegisterDTO accountRegisterDTO) {
+        boolean data = accountRepository.existsAccountByLoginId(accountRegisterDTO.getLoginId());
+
+        if(data){
+            throw new ExistLoginException();
+        }
+
         Account account = Account.builder()
                 .email(accountRegisterDTO.getEmail())
                 .loginId(accountRegisterDTO.getLoginId())
