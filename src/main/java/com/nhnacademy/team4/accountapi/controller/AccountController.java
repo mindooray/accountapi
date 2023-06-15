@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/accounts")
+@RequestMapping("/account-api/accounts")
 public class AccountController {
 
     AccountStatus active = AccountStatus.ACTIVE;
