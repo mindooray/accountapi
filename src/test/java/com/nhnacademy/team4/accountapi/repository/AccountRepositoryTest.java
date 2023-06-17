@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ActiveProfiles("dev")
 class AccountRepositoryTest {
 
     @Autowired
@@ -26,7 +28,11 @@ class AccountRepositoryTest {
     @Test
     void findByLoginId() {
         String loginId = "testlogin1";
-        Account account = new Account(33L, "test1@example.com", loginId, "testpassword1", LocalDate.now(), AccountStatus.ACTIVE, LocalDate.now(), "USER");
+        Account account = Account.builder()
+                .email("test1@example.com")
+                .loginId(loginId)
+                .password("testpassword1")
+                .build();
         accountRepository.save(account);
 
         // When
@@ -39,7 +45,12 @@ class AccountRepositoryTest {
     @Test
     void findAccountByEmail() {
         String email ="test1@example.com";
-        Account account = new Account(33L, email, "testlogin", "testpassword1", LocalDate.now(), AccountStatus.ACTIVE, LocalDate.now(), "USER");
+        Account account = Account.builder()
+                .loginId("testLogin")
+                .email(email)
+                .password("testpassword1")
+                .build();
+
         accountRepository.save(account);
 
         // When

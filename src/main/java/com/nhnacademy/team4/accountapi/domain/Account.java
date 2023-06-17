@@ -19,7 +19,7 @@ import java.util.Date;
 public class Account {
 
 
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name="account_id")
     private Long accountId;

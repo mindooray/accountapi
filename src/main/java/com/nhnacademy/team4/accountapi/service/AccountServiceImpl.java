@@ -79,7 +79,7 @@ public class AccountServiceImpl implements AccountService {
                 //
                 .lastLoginDate(LocalDate.now())
                 //
-                .role(String.valueOf(Role.USER))
+                .role(Role.USER.getRole())
                 .build();
         accountRepository.save(account);
         return accountRegisterDTO;

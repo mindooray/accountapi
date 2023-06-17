@@ -23,9 +23,8 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/account-api/accounts")
+@RequestMapping(value = "/account-api/accounts")
 public class AccountController {
-
     AccountStatus active = AccountStatus.ACTIVE;
     AccountStatus inActive = AccountStatus.INACTIVE;
     AccountStatus withdraw = AccountStatus.WITHDRAW;

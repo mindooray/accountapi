@@ -12,15 +12,17 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.validation.constraints.Email;
 
-//@RestControllerAdvice
-//public class CommonAdvice extends ResponseEntityExceptionHandler {
-//
-//    @ResponseStatus(HttpStatus.NOT_FOUND)
-//    @ExceptionHandler(EmailNotExistException.class)
-//    public String notFoundAccountException(EmailNotExistException e){
-//        logger.error("EmailNotExist:{}");
-//        return e.getMessage();
-//    }
-//
-//
-//}
+@RestControllerAdvice
+public class CommonAdvice extends ResponseEntityExceptionHandler {
+
+
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(EmailNotExistException.class)
+    public String notFoundAccountException(EmailNotExistException e){
+        logger.error("EmailNotExist:{}");
+        return e.getMessage();
+    }
+
+
+}
